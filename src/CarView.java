@@ -25,9 +25,17 @@ public class CarView extends JFrame {
     JPanel controlPanel = new JPanel();
 
     JPanel gasPanel = new JPanel();
+    JPanel brakePanel = new JPanel();
+
     JSpinner gasSpinner;
+    JSpinner brakeSpinner;
+
     int gasAmount = 50;
+    int brakeAmount = 50;
+
     JLabel gasLabel = new JLabel("Amount of gas");
+
+   // JLabel brakeLabel = new JLabel("Amount of brake");
 
     JButton gasButton = new JButton("Gas");
     JButton brakeButton = new JButton("Brake");
@@ -54,21 +62,36 @@ public class CarView extends JFrame {
 
         this.add(drawPanel);
 
-        SpinnerModel spinnerModel =
+        SpinnerModel gasSpinnerModel =
                 new SpinnerNumberModel(gasAmount, //initial value
                         0, //min
                         100, //max
                         1);//step
-        gasSpinner = new JSpinner(spinnerModel);
+        gasSpinner = new JSpinner(gasSpinnerModel);
         gasSpinner.addChangeListener(e -> {
                 gasAmount = (int) ((JSpinner)e.getSource()).getValue();
         });
+
+        SpinnerModel brakeSpinnerModel =
+                new SpinnerNumberModel(brakeAmount, //initial value
+                        0, //min
+                        100, //max
+                        1);//step
+        brakeSpinner = new JSpinner(brakeSpinnerModel);
+        brakeSpinner.addChangeListener(e -> {
+            brakeAmount = (int) ((JSpinner)e.getSource()).getValue();
+        });
+
+
 
         gasPanel.setLayout(new BorderLayout());
         gasPanel.add(gasLabel, BorderLayout.PAGE_START);
         gasPanel.add(gasSpinner, BorderLayout.PAGE_END);
 
         this.add(gasPanel);
+
+        brakePanel.add(brakeSpinner, BorderLayout.PAGE_END);
+
 
         controlPanel.setLayout(new GridLayout(2,4));
 
@@ -98,6 +121,28 @@ public class CarView extends JFrame {
         gasButton.addActionListener(e -> {
             carC.gas(gasAmount);
         });
+        brakeButton.addActionListener(e -> {
+            carC.brake(brakeAmount);
+        });
+        leftButton.addActionListener(e ->{
+            carC.turnLeft();
+        });
+        rightButton.addActionListener(e->{
+            carC.turnRight();
+        });
+        startButton.addActionListener(e->{
+            carC.startCars();
+        });
+        stopButton.addActionListener(e->{
+            carC.stopCars();
+        });
+        turboOffButton.addActionListener(e->{
+            carC.turboOff();
+        });
+        turboOnButton.addActionListener(e->{
+            carC.turboOn();
+        });
+
 
         // Make the panel layout more compact
         this.pack();
